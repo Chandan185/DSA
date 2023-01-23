@@ -1,0 +1,37 @@
+//Questionlink-https://leetcode.com/problems/distant-barcodes/description/
+
+class Solution {
+public:
+    vector<int> rearrangeBarcodes(vector<int>& barcodes) {
+        priority_queue<pair<int,int>> pq;
+        map<int,int> mp;
+        for(auto x:barcodes){
+            mp[x]++;
+        }
+        for(auto x:mp){
+            pq.push({x.second,x.first});
+        }
+        vector<int> temp;
+        while(!pq.empty()){
+            int c1=pq.top().first;
+            int ele1=pq.top().second;
+            pq.pop();
+            temp.push_back(ele1);
+            if(pq.empty()){
+                break;
+            }
+            int c2=pq.top().first;
+            int ele2=pq.top().second;
+            pq.pop();
+            temp.push_back(ele2);
+            c1--;c2--;
+            if(c1!=0){
+                pq.push({c1,ele1});
+            }
+            if(c2!=0){
+                pq.push({c2,ele2});
+            }
+        }
+        return temp;
+    }
+};

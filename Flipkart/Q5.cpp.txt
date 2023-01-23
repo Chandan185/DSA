@@ -1,0 +1,70 @@
+//Questionlink-https://leetcode.com/problems/find-in-mountain-array/description/
+
+/**
+ * // This is the MountainArray's API interface.
+ * // You should not implement it, or speculate about its implementation
+ * class MountainArray {
+ *   public:
+ *     int get(int index);
+ *     int length();
+ * };
+ */
+
+class Solution {
+public:
+    int binary(int low,int high,MountainArray &arr,int target,int x){
+        while(high>=low){
+            int mid=low+(high-low)/2;
+            int ele=arr.get(mid);
+            if(ele==target){
+                return mid;
+            }
+            if(x==0){
+                if(ele>target){
+                high=mid-1;
+                }
+                else{
+                    low=mid+1;
+                }
+            }
+            if(x==1){
+                if(ele>target){
+                    low=mid+1;
+                }
+                else{
+                    high=mid-1;
+                }
+            }
+        }
+        return -1;
+    }
+    int findInMountainArray(int target, MountainArray &mountainArr) {
+        int ind=0;
+        int low=1,high=mountainArr.length()-2;
+        while(high>=low){
+            int mid=low+(high-low)/2;
+            int ele=mountainArr.get(mid);
+            if(ele>mountainArr.get(mid+1) && mountainArr.get(mid-1)<ele){
+                ind=mid;
+                break;
+            }
+            else if(ele>mountainArr.get(mid+1)){
+                high=mid-1;
+            }
+            else{
+                low=mid+1;
+            }
+        }
+        int ans=binary(0,ind,mountainArr,target,0);
+        if(ans==-1){
+            ans=binary(ind+1,mountainArr.length()-1,mountainArr,target,1);
+            if(ans==-1){
+                return -1;
+            }
+            else{
+                return ans;
+            }
+        }
+        return ans;
+    }
+};

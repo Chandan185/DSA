@@ -1,0 +1,22 @@
+//Question link-https://leetcode.com/problems/find-the-winner-of-the-circular-game/description/
+
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        queue<int> q;
+        for(int i=1;i<=n;i++){
+            q.push(i);
+        }
+        while(q.size()>1){
+            int x=k-1;
+            while(x>0){
+                int f=q.front();
+                q.pop();
+                q.push(f);
+                x--;
+            }
+            q.pop();
+        }
+        return q.front();
+    }   
+};

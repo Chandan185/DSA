@@ -1,0 +1,24 @@
+//Quesionlink-https://leetcode.com/problems/number-of-people-aware-of-a-secret/
+
+class Solution {
+public:
+    int peopleAwareOfSecret(int n, int delay, int forget) {
+        vector<int> v(n);
+        int mod=1e9+7;
+        v[0]=1;
+        long long npss=0;//number of people sharing the secret
+        //formula-npss+number of new people sharing the secret-number of people forgetting the secret
+        for(int i=1;i<n;i++){
+            int numberofnewpeoplesharingsecret=(i>=delay)?v[i-delay]:0;
+            int numberofpoepleforgettingsecret=(i>=forget)?v[i-forget]:0;
+            npss+=(numberofnewpeoplesharingsecret-numberofpoepleforgettingsecret+mod)%mod;
+            v[i]=npss%mod;
+        }
+        int ans=0;
+        for(int i=n-forget;i<n;i++){
+            ans+=v[i];
+            ans%=mod;
+        }
+        return ans;
+    }
+};

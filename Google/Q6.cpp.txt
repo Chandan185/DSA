@@ -1,0 +1,43 @@
+//Questionlink-https://leetcode.com/problems/distinct-echo-substrings/description/
+
+#define ll long long int
+class Solution {
+public:
+    ll mod=1e9+7;
+    ll r=256; //radix value
+    vector<ll> hash,power;
+    void createhash(string s,int n){
+        hash.resize(n);
+        power.resize(n);
+        power[0]=1;
+        for(int i=1;i<n;i++){
+            hash[i]=(hash[i-1]*r+s[i])%mod;
+            power[i]=(power[i-1]*r)%mod;
+        }
+    }
+    int calc(int l,int r){
+        ll hashvalue=(hash[r]-hash[l]*power[r-l]%mod+mod)%mod;
+        return hashvalue;
+    }
+    int distinctEchoSubstrings(string text) {
+        int n=text.size();
+        set<int> s;
+        createhash(text,n);
+        for(int len=1;len<=n/2;len++){
+            int c=0;
+            for(int l=0,r=len;r<n;l++,r++){
+                if(text[l]==text[r]){
+                    c++;
+                }
+                else{
+                    c=0;
+                }
+                if(c==len){
+                    s.insert(calc(l,r));
+                    c--;
+                }
+            }
+        }
+        return s.size();
+    }
+};

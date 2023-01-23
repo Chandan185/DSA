@@ -1,0 +1,26 @@
+//https://leetcode.com/problems/valid-square/description/
+
+
+class Solution {
+public:
+    double finddis(vector<int> &p1,vector<int> &p2){
+        double ans=((p1[0]-p2[0])*(p1[0]-p2[0]))+((p1[1]-p2[1])*(p1[1]-p2[1]));
+        return sqrt(ans);
+    }
+    bool validSquare(vector<int>& p1, vector<int>& p2, vector<int>& p3, vector<int>& p4) {
+        vector<vector<int>> v={p1,p2,p3,p4};
+        set<double> s;
+        for(int i=0;i<4;i++){
+            for(int j=i+1;j<4;j++){
+                double x=finddis(v[i],v[j]);
+                if(x==0){
+                    return false;
+                }
+                else{
+                    s.insert(x);
+                }
+            }
+        }
+        return s.size()==2;
+    }
+};

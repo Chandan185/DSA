@@ -1,0 +1,37 @@
+//Questionlink-https://leetcode.com/problems/minimum-genetic-mutation/description/
+
+class Solution {
+public:
+    bool cantransform(string curr,string s){
+        int cnt=0;
+        for(int i=0;i<s.size();i++){
+            if(s[i]!=curr[i]){
+                cnt++;
+            }
+        }
+        return cnt==1;
+    }
+    int minMutation(string startGene, string endGene, vector<string>& bank) {
+        int n=bank.size();
+        queue<string> q;
+        vector<bool> vis(n,false);
+        q.push(startGene);
+        int steps=0;
+        while(!q.empty()){
+            int temp=q.size();
+            while(temp--){
+                string curr=q.front();
+                q.pop();
+                if(curr==endGene) return steps;
+                for(int i=0;i<n;i++){
+                    if(!vis[i] && cantransform(curr,bank[i])){
+                        q.push(bank[i]);
+                        vis[i]=true;
+                    }
+                }
+            }
+            steps++;
+        }
+    return -1;
+    }
+};

@@ -1,0 +1,29 @@
+//Questionlink-https://leetcode.com/problems/custom-sort-string/description/
+
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        map<char,int> mp1,mp2;
+        for(auto x:order){
+            mp1[x]++;
+        }
+        for(auto x:s){
+            mp2[x]++;
+        }
+        string ans="";
+        for(auto x:order){
+            mp1[x]--;
+            while(mp2[x]>0){
+                ans+=x;
+                mp2[x]--;
+            }
+        }
+        for(auto x:s){
+            if(mp2[x]>0){
+                ans+=x;
+                mp2[x]--;
+            }
+        }
+        return ans;
+    }
+};

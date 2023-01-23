@@ -1,0 +1,36 @@
+//Questionlink-https://leetcode.com/problems/closest-prime-numbers-in-range/description/
+
+class Solution {
+public:
+    vector<int> closestPrimes(int left, int right) {
+        //finding all primenumber from 0 till right
+        if(left==right || right<=2){
+            return {-1,-1};
+        }
+        vector<int> prime;
+        vector<int> v(right+1,1);
+        v[0]=0,v[1]=0;
+        v[2]=1;v[3]=1;
+        for(int i=2;i*i<=right;i++){
+            if(v[i]){
+                for(int j=i*i;j<=right;j+=i){
+                    v[j]=0;
+                }
+            }
+        }
+        for(int i=left;i<=right;i++){
+            if(v[i]){
+                prime.push_back(i);
+            }
+        }
+        int ans1=-1, ans2=-1,diff=1e9;
+        for(int i=1;i<prime.size();i++){
+            if((prime[i]-prime[i-1])<diff){
+                diff=prime[i]-prime[i-1];
+                ans1=prime[i-1];
+                ans2=prime[i];
+            }
+        }
+        return {ans1,ans2};
+    }   
+};

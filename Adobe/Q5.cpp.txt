@@ -1,0 +1,26 @@
+//Question link-https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/description/
+
+class Solution {
+public:
+    int findIntegers(int n) {
+        vector<int> v(31,0);
+        v[0]=1;
+        v[1]=2;
+        for(int i=2;i<31;i++){
+            v[i]=v[i-1]+v[i-2];
+        }
+        int k=30,ans=0,prev=0;
+        while(k>=0){
+            if(n&(1<<k)){
+                ans+=v[k];
+                if(prev) return ans;
+                prev=1;
+            }
+            else{
+                prev=0;
+            }
+            k--;
+        }
+        return ans+1;
+    }
+};

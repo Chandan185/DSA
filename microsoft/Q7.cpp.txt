@@ -1,0 +1,38 @@
+//Question Link-https://leetcode.com/problems/course-schedule/description/
+
+//it is simply a cycle detection in directed graph problem
+class Solution {
+public:
+    bool dfs(int node,vector<vector<int>> &graph,vector<bool> &visi,vector<bool> &d){
+        visi[node]=true;
+        d[node]=true;
+        for(auto neighbour:graph[node]){
+            if(!visi[neighbour]){
+                if(dfs(neighbour,graph,visi,d)){
+                    return true;
+                }
+            }
+            else if(visi[neighbour] && d[neighbour]){
+                return true;
+            }
+        }
+        d[node]=false;
+        return false;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> graph(numCourses);
+        for(auto x:prerequisites){
+            graph[x[0]].push_back(x[1]);
+        }
+        vector<bool> visi(numCourses,false);
+        vector<bool> d(numCourses,false);
+        for(int i=0;i<numCourses;i++){
+            if(!visi[i]){
+                if(dfs(i,graph,visi,d)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+};

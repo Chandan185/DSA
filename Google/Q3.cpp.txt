@@ -1,0 +1,19 @@
+//Questionlink-https://leetcode.com/problems/sort-an-array/description/
+
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        //maxheap
+        priority_queue<int> pq;
+        for(int i=0;i<nums.size();i++){
+            pq.push(nums[i]);
+        }
+        int i=nums.size()-1;
+        while(!pq.empty()){
+            nums[i]=pq.top();
+            pq.pop();
+            i--;
+        }
+        return nums;
+    }
+};

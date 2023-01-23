@@ -1,0 +1,22 @@
+//Questionlink-https://leetcode.com/problems/increasing-triplet-subsequence/description/
+
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        //find long increasing subsequence 
+        vector<int> temp;
+        int n=nums.size();
+
+        temp.push_back(nums[0]);
+        for(int i=1;i<n;i++){
+            if(nums[i]>temp.back()){
+                temp.push_back(nums[i]);
+            }
+            else{
+                auto it=lower_bound(temp.begin(),temp.end(),nums[i])-temp.begin();
+                temp[it]=nums[i];
+            }
+        }
+        return temp.size()>2;
+    }
+};
